@@ -1,0 +1,94 @@
+html,body{
+  height: 100%;
+  background-color: #fff;
+}
+
+#tab-bar.demo {
+  display: flex;
+  bottom: 0;
+  flex-direction: column;
+}
+#tab-bar .demoName {
+  height: 40px;
+}
+#tab-bar .demo-preview-item .am-tab-bar {
+  background-color: white;
+}
+
+/* navbar */
+
+.am-navbar{
+  background-color: #efefef;
+}
+
+.am-drawer-draghandle{
+  display: none;
+}
+
+.am-drawer-left{
+  top: 2.8125rem;
+}
+
+.am-drawer-sidebar{
+  width: 90%;
+}
+
+.am-drawer-content{
+  display: none;
+}
+
+/* .am-drawer-sidebar{
+  z-index: 999999;
+} */
+
+/* 首页的消息列表 */
+.chat-lists-wrap{
+  display: flex;
+  padding: .625rem;
+}
+
+.chat-lists-wrap .left {
+  display: flex;
+  flex: 9;
+}
+
+.chat-lists-wrap .left .avatar-container{
+  margin-right: .625rem;
+}
+
+.chat-lists-wrap .left .avatar-container>img{
+  width: 3.125rem;
+  height: 3.125rem;
+  border-radius: .375rem;
+}
+
+.chat-lists-wrap .inner{
+  margin-top: .3125rem;
+  width: 100%;
+  padding-bottom: .9375rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.chat-lists-wrap .inner .content{
+  color: #999;
+  margin-top: .3125rem;
+}
+
+
+.chat-lists-wrap .right{
+  flex: 1;
+  border-bottom: 1px solid #ddd;
+}
+
+/* 通讯录-indexlist */
+.index-wrap{
+  display: table;
+  position: absolute;
+  right: 0;
+}
+
+.index-wrap .each-index{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

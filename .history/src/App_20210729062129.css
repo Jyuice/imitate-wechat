@@ -1,0 +1,40 @@
+html,body{
+  height: 100%;
+}
+
+#tab-bar.demo {
+  display: flex;
+  bottom: 0;
+  flex-direction: column;
+}
+#tab-bar .demoName {
+  height: 40px;
+}
+#tab-bar .demo-preview-item .am-tab-bar {
+  background-color: white;
+}
+
+/* 首页的消息列表 */
+.chat-lists-wrap{
+  display: flex;
+  padding: .625rem;
+}
+
+.chat-lists-wrap .left {
+  display: flex;
+  flex: 9;
+}
+
+.chat-lists-wrap .left .avatar-container{
+  margin-right: .625rem;
+}
+
+.chat-lists-wrap .left .avatar-container>img{
+  width: 3.125rem;
+  height: 3.125rem;
+  border-radius: .375rem;
+}
+
+.chat-lists-wrap .right{
+  flex: 1;
+}

@@ -1,0 +1,116 @@
+import React, { Component } from 'react'
+import Lists from '../../components/home/Lists'
+// import avatar from "../../assets/images/avatar.jpg"
+import PubSub from 'pubsub-js'
+import io from 'socket.io-client'
+import { getUserFriends } from '../../api/user'
+import { getLastMsg } from '../../api/chat'
+
+// const chatLists = [
+//     {
+//         id: 0,
+//         avatar: avatar,
+//         name: 'Depon',
+//         lastMsg: "中国牛逼！",
+//         lastTime: "12:00"
+//     },{
+//         id: 1,
+//         avatar: avatar,
+//         name: 'Depon1',
+//         lastMsg: "中国牛逼！",
+//         lastTime: "12:00"
+//     },{
+//         id: 2,
+//         avatar: avatar,
+//         name: 'Depon2',
+//         lastMsg: "中国牛逼！",
+//         lastTime: "12:00"
+//     },{
+//         id: 3,
+//         avatar: avatar,
+//         name: 'Depon3',
+//         lastMsg: "中国牛逼！",
+//         lastTime: "12:00"
+//     },
+// ] 
+
+export default class Home extends Component {
+
+    state = {
+        chatLists: []
+    }
+
+    componentDidMount() {
+        // isLogin(localStorage.getItem("userId")).then(res => {
+        //     if(res.message !== "已登录") {
+        //         this.props.history.push("/login")
+        //     }
+        //   })
+        if(!localStorage.getItem("userId")) this.props.history.push("/login")
+        this.getLastMsg()
+        // this.connSocket()
+    }
+
+    connSocket = () => {
+        const socket = io.connect('ws://106.52.45.38:6050/home')
+        socket.emit("online",localStorage.getItem("userId"))
+        socket.on('open', async msg => {
+            console.log(msg)
+        })
+    }
+
+    getLastMsg = () => {
+        getUserFriends(localStorage.getItem("userId")).then(res => {
+            for(let i of res.friendsList) {
+                getLastMsg(localStorage.getItem("userId"), i.id).then(res => {
+
+                })
+                // const time = this.fuzzUpTime(i.lastTime)
+                // i.lastTime = time
+                // this.setState({
+                //     chatLists : [...this.state.chatLists,i]
+                // })
+            }
+        })
+    }
+
+    fuzzUpTime = (time) => {
+        const month = Number(time.slice(5, 7));
+        const day = Number(time.slice(8, 10));
+        const day_now = Number(new Date().getDate());
+        const exactTime = time.slice(11,16)
+        const exactDate = month + "月" + day + "日"
+    
+        let jatlag = exactTime;
+        
+        if (day_now - day > 0) {
+          if(day_now - day === 1) {
+            jatlag = "昨天"
+          }
+          jatlag = exactDate
+        }
+        
+        // if (month_now - month > 0) {
+        //   if (month_now - month === 1 && day_now - day < 30) {
+        //     jatlag =
+        //       day_now + (bigMonth.indexOf(month) > -1 ? 31 : 30) - day + "天前"
+        //   } else jatlag = month_now - month + "月前"
+        // }
+        // if (year_now - year > 0) jatlag = year_now - year + "年前"
+    
+        return jatlag
+      };
+
+    render() {
+        PubSub.publish(`HIDE NAVBAR`, false)
+        PubSub.publish(`HIDE TABBAR`, false)
+        return (
+            <div>
+                {this.state.chatLists.map(i => (
+                    <Lists key={i.id} list={i}/>
+                ))}
+
+            </div>
+        )
+    }
+}
